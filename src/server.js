@@ -11,4 +11,19 @@ app.use(morgan('tiny'));
 
 app.use('/api/posts', postRoutes);
 
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  if(!err.status) {
+    err.status = 500;
+    err.message = 'Internal Server Error';
+  }
+  res.status(err.status).json({ error: err.message });
+});
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

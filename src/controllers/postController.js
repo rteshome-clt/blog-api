@@ -8,18 +8,12 @@ export function getAllPostsHandler(req, res) {
 export function getPostByIdHandler(req, res) {
     const id = parseInt(req.params.id);
     const post = getPostById(id);
-
-    if (post) {
-        return res.status(200).json(post);
-    } else {
-        res.status(404).json({error: `Post ${id} not found`});
-    }
+    res.status(200).json(post);
 }
 
 export function createPostHandler(req, res) {
     const {title, content} = req.body;
     const newPost = createPost({title, content});
-
     res.status(201).json(newPost);
 }
 
@@ -27,21 +21,11 @@ export function updatePostHandler(req, res) {
     const id = parseInt(req.params.id);
     const {title, content} = req.body;
     const updatedPost = updatePost(id, {title,content});
-
-    if (updatedPost) {
-        return res.status(200).json(updatedPost);
-    } else {
-        res.status(404).json({error: `Post ${id} not found`});
-    }
+    res.status(200).json(updatedPost);
 }
 
 export function deletePostHandler(req, res) {
     const id = parseInt(req.params.id);
-    const result = deletePost(id);
-
-    if (result) {
-        return res.status(204).send();
-    } else {
-        res.status(404).json({error: `Post ${id} not found`});
-    }
+    deletePost(id);
+    res.status(204).send();
 }
