@@ -20,3 +20,13 @@ export function create(postData) {
     posts.push(newPost);
     return newPost;
 }
+
+export function update(id, updatedData) {
+    const post = posts.find(post => post.id === id);
+
+    if (!post) return undefined;
+    if (updatedData.title) post.title = updatedData.title;
+    if (updatedData.content) post.content = updatedData.content;
+
+    return post;
+}
