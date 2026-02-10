@@ -1,4 +1,4 @@
-import { getAllPosts, getPostById, createPost, updatePost } from '../services/postServices.js';
+import { getAllPosts, getPostById, createPost, updatePost, deletePost } from '../services/postServices.js';
 
 export function getAllPostsHandler(req, res) {
     let posts = getAllPosts();
@@ -12,7 +12,7 @@ export function getPostByIdHandler(req, res) {
     if (post) {
         return res.status(200).json(post);
     } else {
-        res.status(400).json({error: `Post ${id} not found`});
+        res.status(404).json({error: `Post ${id} not found`});
     }
 }
 
@@ -31,6 +31,17 @@ export function updatePostHandler(req, res) {
     if (updatedPost) {
         return res.status(200).json(updatedPost);
     } else {
-        res.status(400).json({error: `Post ${id} not found`});
+        res.status(404).json({error: `Post ${id} not found`});
+    }
+}
+
+export function deletePostHandler(req, res) {
+    const id = parseInt(req.params.id);
+    const result = deletePost(id);
+
+    if (result) {
+        return res.status(204).send();
+    } else {
+        res.status(404).json({error: `Post ${id} not found`});
     }
 }
