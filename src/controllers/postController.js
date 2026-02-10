@@ -1,4 +1,4 @@
-import { getAllPosts, getPostById } from '../services/postServices.js';
+import { getAllPosts, getPostById, createPost } from '../services/postServices.js';
 
 export function getAllPostsHandler(req, res) {
     let posts = getAllPosts();
@@ -14,4 +14,11 @@ export function getPostByIdHandler(req, res) {
     } else {
         res.status(400).json({error: `Post ${id} not found`});
     }
+}
+
+export function createPostHandler(req, res) {
+    const {title, content} = req.body;
+    const newPost = createPost({title, content});
+
+    res.status(201).json(newPost);
 }

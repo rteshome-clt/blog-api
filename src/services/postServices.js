@@ -1,4 +1,4 @@
-import {getAll, getById } from '../repositories/postRepo.js';
+import {getAll, getById, create } from '../repositories/postRepo.js';
 
 
 export function getAllPosts() {
@@ -7,4 +7,8 @@ export function getAllPosts() {
 
 export function getPostById(id) {
     return getById(id);
+}
+
+export function createPost(postData) {
+    return create(postData);
 }
