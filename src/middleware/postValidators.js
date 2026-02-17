@@ -1,4 +1,4 @@
-import { param, body, oneOf } from 'express-validator';
+import { param, body, oneOf, query } from 'express-validator';
 import { handleValidationErrors } from './handleValidationErrors.js';
 
 export const validateId = [
@@ -70,3 +70,27 @@ export const validateUpdatePost = [
 
     handleValidationErrors,
 ];
+
+export const validatePostQuery = [
+    query('sortBy')
+        .optional()
+        .isIn(['id', 'title', 'content', 'createdAt'])
+        .withMessage('sortBy must be one of id, title, content, createdAt'),
+
+    query('order')
+        .optional()
+        .isIn(['asc', 'desc'])
+        .withMessage('order must either asc or desc'),
+
+    query('offset')
+        .optional()
+        .isInt({min: 0})
+        .withMessage('offset must be a non-negative integer'),
+
+    query('limit')
+        .optional()
+        .isInt({min: 0, max: 50})
+        .withMessage('limit must be a an integer between 1 and 50'),
+    
+    handleValidationErrors,
+]

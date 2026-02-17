@@ -4,10 +4,11 @@ import {
     validateId, 
     validateCreatePost, 
     validateUpdatePost,
+    validatePostQuery
 } from '../middleware/postValidators.js';
 
 const router = express.Router();
-router.get('/', getAllPostsHandler);
+router.get('/', validatePostQuery, getAllPostsHandler);
 router.get('/:id', validateId, getPostByIdHandler);
 router.post('/', validateCreatePost, createPostHandler);
 router.put('/:id', validateId, validateUpdatePost, updatePostHandler);
