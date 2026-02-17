@@ -1,7 +1,22 @@
 import { getAllPosts, getPostById, createPost, updatePost, deletePost } from '../services/postServices.js';
 
 export function getAllPostsHandler(req, res) {
-    let posts = getAllPosts();
+    const { 
+        title = '', 
+        sortBy = 'id', 
+        order = 'asc', 
+        offset = 0, 
+        limit = 5,
+    } = req.query;
+
+    const options = {
+        title, 
+        sortBy, 
+        order, 
+        offset: parseInt(offset), 
+        limit: parseInt(limit),
+    };
+    let posts = getAllPosts(options);
     res.status(200).json(posts);
 }
 
