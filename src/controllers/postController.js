@@ -1,4 +1,4 @@
-import { getAllPosts, getPostById, createPost, updatePost, deletePost } from '../services/postServices.js';
+import { getAllPosts, getPostById, createPost, updatePost, deletePost } from '../services/postService.js';
 
 export function getAllPostsHandler(req, res) {
     const { 

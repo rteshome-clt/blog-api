@@ -18,6 +18,7 @@ export const validateCreateCategory = [
         .withMessage('Name is required')
         .bail()
         .trim()
+        .escape()
         .isString()
         .withMessage('Name must be a string')
         .bail()
@@ -26,7 +27,7 @@ export const validateCreateCategory = [
         .bail()
         .custom((value) => {
             if (getByName(value)) {
-                throw new Error(`Category name "${value}" already exists`);
+                throw new Error(`Category name "${value.trim()}" already exists`);
             }
             return true;
         }),
@@ -36,8 +37,11 @@ export const validateCreateCategory = [
 
 export const validateUpdateCategory = [
     body('name')
-        .optional()
+        .exists({values: 'falsy' })
+        .withMessage('Name is required')
+        .bail()
         .trim()
+        .escape()
         .isString()
         .withMessage('Name must be a string')
         .bail()
@@ -47,7 +51,7 @@ export const validateUpdateCategory = [
         .custom((value, {req}) => {
             const existing = getByName(value);
             if (existing && existing.id!==parseInt(req.params.id)) {
-                throw new Error(`Category name "${value}" already exists`);
+                throw new Error(`Category name "${value.trim()}" already exists`);
             }
             return true;
         }),

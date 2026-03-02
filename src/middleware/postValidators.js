@@ -45,7 +45,7 @@ export const validateUpdatePost = [
             body('title').exists({values: 'falsy'}),
             body('content').exists({values: 'falsy'})
         ],
-        { message: 'At leaste one field (title, content) must be provided' }
+        { message: 'At least one field (title, content) must be provided' }
     ),
 
     body('title')
@@ -90,7 +90,7 @@ export const validatePostQuery = [
     query('limit')
         .optional()
         .isInt({min: 0, max: 50})
-        .withMessage('limit must be a an integer between 1 and 50'),
+        .withMessage('limit must be a an integer between 0 and 50'),
     
     handleValidationErrors,
 ]
